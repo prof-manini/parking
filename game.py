@@ -131,7 +131,7 @@ class Game:
 		
 	    
 
-            # left mouse click on object (start dragging it)?
+            #left mouse click on object (start dragging it)?
             if (event.type == pygame.MOUSEBUTTONDOWN):
                 self.last_mouse_pos = pygame.mouse.get_pos()
                 left, _, _ = pygame.mouse.get_pressed()
