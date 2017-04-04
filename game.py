@@ -33,6 +33,10 @@ class Game:
         self.backup_file = "parking.state"
         self.random_mode = False
 
+	self.original_background = pygame.image.load("img/parking-background-0.jpg")
+	self.current_background = pygame.transform.scale(self.original_background, (opt.WIDTH, 								 opt.HEIGHT))
+	
+
 #
     def _do_help(self):
         print("""
@@ -113,14 +117,19 @@ class Game:
                 event.key in [pygame.K_q, pygame.K_ESCAPE]):
                 self.running = False
                 break
-	    # RESIZE
+	    # RESIZE							########################
 	    if event.type == pygame.VIDEORESIZE :
 		width, height = event.size
 		if (width < opt.WIDTH  or
 		    height < opt.HEIGHT):
 			width = opt.WIDTH
 			height = opt.HEIGHT
-		self.screen = pygame.display.set_mode((width,height),pygame.RESIZABLE)
+		self.screen = pygame.display.set_mode((width,height),
+		pygame.RESIZABLE | pygame.HWSURFACE | pygame.DOUBLEBUF)
+	
+		self.current_background = pygame.transform.scale(self.original_background, 						  			 (width,height))
+		
+	    
 
             # left mouse click on object (start dragging it)?
             if (event.type == pygame.MOUSEBUTTONDOWN):
@@ -289,11 +298,9 @@ class Game:
 
 #
     def draw(self):
-	background = pygame.image.load("img/parking-background-0.jpg")
-	self.screen.blit(background, [0,0])   
+
+	self.screen.blit(self.current_background, [0,0])   
         self.all_sprites.draw(self.screen)
-        # self.draw_text("Mouse down at: %s" % str(self.last_mouse_pos),
-        #                         24, opt.WHITE, (150,50))
         pygame.display.flip()
 
 #
