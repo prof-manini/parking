@@ -21,7 +21,8 @@ class Game:
 
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((opt.WIDTH, opt.HEIGHT))
+	window_size = [opt.WIDTH,opt.HEIGHT]
+        self.screen = pygame.display.set_mode(window_size, pygame.RESIZABLE)
         pygame.display.set_caption(opt.TITLE)
         self.clock = pygame.time.Clock()
         self.running = True
@@ -112,6 +113,14 @@ class Game:
                 event.key in [pygame.K_q, pygame.K_ESCAPE]):
                 self.running = False
                 break
+	    # RESIZE
+	    if event.type == pygame.VIDEORESIZE :
+		width, height = event.size
+		if (width < opt.WIDTH  or
+		    height < opt.HEIGHT):
+			width = opt.WIDTH
+			height = opt.HEIGHT
+		self.screen = pygame.display.set_mode((width,height),pygame.RESIZABLE)
 
             # left mouse click on object (start dragging it)?
             if (event.type == pygame.MOUSEBUTTONDOWN):
@@ -280,7 +289,8 @@ class Game:
 
 #
     def draw(self):
-        self.screen.fill(opt.BLACK)
+	background = pygame.image.load("img/parking-background-0.jpg")
+	self.screen.blit(background, [0,0])   
         self.all_sprites.draw(self.screen)
         # self.draw_text("Mouse down at: %s" % str(self.last_mouse_pos),
         #                         24, opt.WHITE, (150,50))
