@@ -11,7 +11,7 @@ import time
 # eventuali globali
 WIDTH = 300
 HEIGHT = 250
-TITLE = ""
+TITLE = "Pannello posti liberi"
 
 
 
