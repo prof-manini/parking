@@ -45,11 +45,10 @@ class Panel:
 
 # main
 def main():
-    p = panel.Panel()
+    p = Panel()
 
 
 if __name__ == "__main__":
-
     sys.exit(main())
 
 
