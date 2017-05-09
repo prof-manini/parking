@@ -13,8 +13,6 @@ WIDTH = 300
 HEIGHT = 250
 TITLE = "Pannello posti liberi"
 
-
-
 #*****************
 
 # classe Panel
@@ -23,7 +21,7 @@ class Panel:
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        pygame.display.set_caption()
+        pygame.display.set_caption(TITLE)
         self.header
         self.displayZone1
         self.displayZone2
@@ -38,6 +36,20 @@ class Panel:
 
     def draw():
         pass
+
+    def run():
+        pass
+
+
+
+# main
+def main():
+    p = panel.Panel()
+
+
+if __name__ == "__main__":
+
+    sys.exit(main())
 
 
 
