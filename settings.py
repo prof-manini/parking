@@ -9,18 +9,14 @@ FONT_NAME = "arial"
 
 # colors
 WHITE = (255,255,255)
-GRAY = (128,128,128)
 BLACK = (0,0,0)
-RED = (255,0,0)
-GREEN = (0,255,0)
-BLUE = (0,0,255)
-YELLOW = (255,255,0)
 
 # layers
 # cars should go under (be shadowed by) sensors
 CAR_LAYER = 1
 CAR_SENSOR_LAYER = 2
 STAIRS_LAYER = 2
+LIGTHS_LAYER = 1
 
 WAITING, PARKING, PARKED, LEAVING = range(4)
 

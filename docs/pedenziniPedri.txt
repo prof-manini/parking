@@ -1,0 +1,6 @@
+https://github.com/pedenziniPedri/parking
+
+Sprite unico in cui vengono visualizzate ogni tot per 
+indicare la strada dall'entrata al parcheggio e dal 
+parcheggio all'uscita.
+
