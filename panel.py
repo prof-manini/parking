@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # File panel.py contenente la classe panel (pannello posti liberi), il metodo
 # main e le classi per la gestione della comunicazione tra processi via socket.
 import pygame
@@ -10,9 +12,10 @@ import sys
 import time
 
 # eventuali globali
-WIDTH = 300
-HEIGHT = 250
+WIDTH = 600
+HEIGHT = 400
 TITLE = "Pannello posti liberi"
+THICKNESS = 2
 
 #*****************
 
@@ -22,30 +25,49 @@ class Panel:
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
         pygame.display.set_caption(TITLE)
-        self.header
-        self.displayZone1
-        self.displayZone2
-        self.displayZone3
-        self.displayInfo
+        self.running = True
+        self.zone1 = list() #lista compredente due elementi, il primo è il numero di posti liberi ed il secondo è la stringa contenente il colore
+        self.zone2 = list()
+        self.zone3 = list()
 
-    def events():
+    def events(self):
+        for event in pygame.event.get():
+            # QUIT
+            if (event.type == pygame.QUIT or
+                event.type == pygame.KEYDOWN and
+                event.key in [pygame.K_q, pygame.K_ESCAPE]):
+                self.running = False
+                break
+
+    def update(self):
         pass
 
-    def update():
-        pass
+    def draw(self):
+        self.screen.fill(opt.LIGHTBLUE)
+        pygame.font.init()
+        self.headerFont = pygame.font.SysFont('TimesNewRoman', 20)
+        self.headerSurface = self.headerFont.render("PARCHEGGIO ISTITUTO D'ISTRUZIONE LA ROSA BIANCA", False, opt.WHITE)
+        self.screen.blit(self.headerSurface,(35,25))
+        pygame.draw.lines(self.screen, opt.WHITE, False, [(0,70),(WIDTH,70)], THICKNESS)
+        pygame.draw.lines(self.screen, opt.WHITE, False, [(0,HEIGHT - 70),(WIDTH,HEIGHT -70)], THICKNESS)
 
-    def draw():
-        pass
 
-    def run():
-        pass
+        pygame.display.flip()
+
+    def run(self):
+        while self.running:
+            self.events()
+            self.update()
+            self.draw()
 
 
 
 # main
 def main():
     p = Panel()
+    p.run()
 
 
 if __name__ == "__main__":
