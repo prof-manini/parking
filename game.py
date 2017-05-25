@@ -112,23 +112,19 @@ class Game:
 
 #						 
     def get_window_size(self):
-	return self.current_background.get_rect().widht, self.current_background.get_rect().height
+	return self.current_background.get_rect().width, self.current_background.get_rect().height
 
 #
-    def get_scale_window(self, width, height):
+    def get_ratio(self, width, height):
 	
 	
-	maxWidth =  1920
-	maxHeight = 1080
+	maxWidth =  16
+	maxHeight = 9
 
-	ratioX = maxWidth /  width
-	ratioY = maxHeight / height
-	ratio = min(ratioX, ratioY)
+	ratioX = (maxHeight / maxWidth) * width
+	ratioY = (maxHeight / maxWidth) * height
 
-	scale_width = int(width * ratio)
-	scale_height = int(height * ratio)
-
-	return scale_width, scale_height   
+	return int(ratioX), int(ratioY)   
 	
 #
     def events(self):
@@ -143,10 +139,13 @@ class Game:
 	    # RESIZE							
 	    if event.type == pygame.VIDEORESIZE :
 		width, height = event.size
+		width, height = self.get_ratio(width,height)
+
 		if (width < opt.WIDTH  or
 		    height < opt.HEIGHT):
 			width = opt.WIDTH
 			height = opt.HEIGHT
+		
 		self.screen = pygame.display.set_mode((width,height),
 		pygame.RESIZABLE | pygame.HWSURFACE | pygame.DOUBLEBUF)	
 		self.current_background = pygame.transform.scale(self.original_background, 						  			 (width,height))
