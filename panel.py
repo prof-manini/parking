@@ -28,9 +28,12 @@ class Panel:
 
         pygame.display.set_caption(TITLE)
         self.running = True
+	self.footer = "CAVALESE - "
+	self.time = time.strftime("%H:%M")
         self.zone1 = list() #lista compredente due elementi, il primo è il numero di posti liberi ed il secondo è la stringa contenente il colore
         self.zone2 = list()
         self.zone3 = list()
+        
 
     def events(self):
         for event in pygame.event.get():
@@ -42,17 +45,36 @@ class Panel:
                 break
 
     def update(self):
-        pass
+	self.time = time.strftime("%H:%M")
 
     def draw(self):
         self.screen.fill(opt.LIGHTBLUE)
         pygame.font.init()
-        self.headerFont = pygame.font.SysFont('TimesNewRoman', 20)
+	self.headerFont = pygame.font.SysFont('Times New Roman', 20)
         self.headerSurface = self.headerFont.render("PARCHEGGIO ISTITUTO D'ISTRUZIONE LA ROSA BIANCA", False, opt.WHITE)
         self.screen.blit(self.headerSurface,(35,25))
         pygame.draw.lines(self.screen, opt.WHITE, False, [(0,70),(WIDTH,70)], THICKNESS)
         pygame.draw.lines(self.screen, opt.WHITE, False, [(0,HEIGHT - 70),(WIDTH,HEIGHT -70)], THICKNESS)
+	self.zoneFont = pygame.font.SysFont('Comics Sans', 32)
+        self.screen.blit(self.zoneFont.render("ZONA 1", False, opt.WHITE), (110, 135))
+        self.screen.blit(self.zoneFont.render("ZONA 2", False, opt.WHITE), (110, 190))
+        self.screen.blit(self.zoneFont.render("ZONA 3", False, opt.WHITE), (110, 245))
+        
+        self.freePlaces = pygame.font.SysFont('Comics Sans', 32)
+        
+#nel primo parametro della funzione render andrà messo self.zone[0], il 5 è stato messo solo di   prova per testare il codice scritto.
 
+        self.screen.blit(self.freePlaces.render("            5            ", False,          (255,128,0),opt.BLACK), (230,135))
+        self.screen.blit(self.freePlaces.render("            5            ", False, (255,128,0),opt.BLACK), (230,190))
+	self.screen.blit(self.freePlaces.render("            5            ", False, (255,128,0),opt.BLACK), (230,245))
+
+# Anche qui i colori sono stati inseriti per provare il codice. Nel programma vero dovranno cambiare in base al numero di posti liberi.	
+	pygame.draw.circle(self.screen, opt.GREEN, (430,145), 12, 0)
+	pygame.draw.circle(self.screen, (255,128,0), (430,200), 12, 0)
+	pygame.draw.circle(self.screen, opt.RED, (430,255), 12, 0)
+        self.footerFont = pygame.font.SysFont('Comics Sans', 32)
+        self.footerSurface = self.footerFont.render(self.footer+self.time, False, opt.WHITE)
+        self.screen.blit(self.footerSurface,(170,355))
 
         pygame.display.flip()
 
