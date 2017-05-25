@@ -68,14 +68,15 @@ class Game:
         #     self._add_car()
 
 #
-    def _add_sensor(self, pos=None):
+    def _add_sensor(self, pos=None, zone=None):
         c = len(self.sensors)
         if pos == None:
             pos = (100, c * 50 + 100)
             if pos[1] > opt.HEIGHT - 50:
                 error("No room left for sensor")
                 return
-        zone = c % 3
+        if zone is None:
+            zone = c % 3
         s = car_sensor.CarSensor(self, pos, zone)
         debug("Adding sensor n. %d at %s in zone %d", s.oid, pos, zone)
 
@@ -270,7 +271,7 @@ class Game:
             debug("Failed to open state backup file '%s'", file)
             return
         for o in ss:
-            self._add_sensor(o.pos)
+            self._add_sensor(o.pos, o.zone)
         for o in cc:
             self._add_car(o.pos)
 
