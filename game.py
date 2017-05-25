@@ -115,12 +115,10 @@ class Game:
 	return self.current_background.get_rect().widht, self.current_background.get_rect().height
 
 #
-    def get_scale_window(self):
-	infoWindow = self.pygame.display.Info()
+    def get_scale_window(self, width, height):
 	
-	width, height = get_window_size()
- 
-	maxWidth  = 1920
+	
+	maxWidth =  1920
 	maxHeight = 1080
 
 	ratioX = maxWidth /  width
@@ -150,11 +148,11 @@ class Game:
 			width = opt.WIDTH
 			height = opt.HEIGHT
 		self.screen = pygame.display.set_mode((width,height),
-		pygame.RESIZABLE | pygame.HWSURFACE | pygame.DOUBLEBUF)
-	
-		self.current_background = pygame.transform.scale(self.original_background, 						  			 ( get_scale_window(self)))
+		pygame.RESIZABLE | pygame.HWSURFACE | pygame.DOUBLEBUF)	
+		self.current_background = pygame.transform.scale(self.original_background, 						  			 (width,height))
 		
-	   
+	    
+
             #left mouse click on object (start dragging it)?
             if (event.type == pygame.MOUSEBUTTONDOWN):
                 self.last_mouse_pos = pygame.mouse.get_pos()
