@@ -42,8 +42,8 @@ class Game:
   l: give some log information (if run with -v option)
   b: save state to file
   r: restore state from file
-  p: park one car (choosen at random)
-  u: make a car leave (choosen at random)
+  p: park one car (choosen at random) following the lights directions that was switch on, when the car is parking make 
+  u: make a car leave (choosen at random) following the lights directions that was switch on
   x: toggle random parking and leaving of cars
   +/=: double random movement interval
   -/_: halve random movement interval

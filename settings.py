@@ -1,15 +1,20 @@
 
 #
 # basic defs
-WIDTH = 600
-HEIGHT = 400
+WIDTH = 1200
+HEIGHT = 800
 FPS = 60
 TITLE = "Parking"
 FONT_NAME = "arial"
 
 # colors
 WHITE = (255,255,255)
+GRAY = (128,128,128)
 BLACK = (0,0,0)
+RED = (255,0,0)
+GREEN = (0,255,0)
+BLUE = (0,0,255)
+YELLOW = (255,255,0)
 
 # layers
 # cars should go under (be shadowed by) sensors
@@ -17,11 +22,15 @@ CAR_LAYER = 1
 CAR_SENSOR_LAYER = 2
 STAIRS_LAYER = 2
 LIGTHS_LAYER = 1
+LIGTH_SENSOR = 1
+
 
 WAITING, PARKING, PARKED, LEAVING = range(4)
 
 #
 RANDOM_MOVES_INTERVAL = 0.5
+RANDOM_PARK_TRY_ANY_CAR = True
+RANDOM_MOVES_LIGTHS_INTERVAL = 0.5
 RANDOM_PARK_TRY_ANY_CAR = True
 
 #
