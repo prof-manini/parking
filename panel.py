@@ -36,7 +36,7 @@ class PanelSocketServer():
             raise Exception("PanelSocketServer: error creating socket")
 
     def _get_sensors_state(self):
-        d = {s.oid:s.active for s in self.game.sensors}
+        d = {s.zone:s.active for s in self.game.sensors}
         return [(k,v) for k,v in sorted(d.items())]
 
     def run(self):
@@ -100,6 +100,7 @@ class Panel:
     def update(self):
        self.time = time.strftime("%H:%M")
        data = self.client.get_data()
+       print(data)
        #work with information
 
     def draw(self):
@@ -124,7 +125,7 @@ class Panel:
 
         # Anche qui i colori sono stati inseriti per provare il codice. Nel programma vero dovranno cambiare in base al numero di posti liberi.
         pygame.draw.circle(self.screen, opt.GREEN, (450,145), 12, 0)
-        pygame.draw.circle(self.screen, (255,128,0), (450,200), 12, 0)
+        pygame.draw.circle(self.screen, opt.GREEN, (450,200), 12, 0)
         pygame.draw.circle(self.screen, opt.RED, (450,255), 12, 0)
         self.footerFont = pygame.font.SysFont('Comics Sans', 32)
         self.footerSurface = self.footerFont.render(self.footer+self.time, False, opt.WHITE)

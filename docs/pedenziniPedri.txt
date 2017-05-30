@@ -1,0 +1,7 @@
+https://github.com/pedenziniPedri/parking
+
+Sprite unico in cui vengono visualizzate le luci ogni 
+tot metri per indicare la strada dall'entrata al 
+parcheggio e dal parcheggio all'uscita.
+E quando si parcheggia il percorso dal parcheggio all' 
+uscita per i pedoni.

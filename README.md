@@ -2,56 +2,8 @@ README
 ======
 
 Questo progetto consiste principalmente in una simulazione di un
-parcheggio, in particolare di una serie di sensori di presenza delle
-macchine, del sistema di controllo dell'ingresso e forse della gestione
-dell'illuminazione.
-
-In una eventuale implementazione vera del sistema, sensori e attuatori
-saranno dei dispositivi elettronici reali, magari con un loro
-funzionamento indipendente ed una propria logica, che saranno però
-interrogabili e controllabili anche da un sistema remoto.
-
-Il software di simulazione, e quindi anche di eventuale futuro controllo
-e gestione, è scritto in Python e c'è quindi il problema
-dell'interfacciamento con l'hardware che si può risolvere in vari modi:
-
-1.  l'hardware è di per sé in grado di comunicare in qualche modo
-    (seriale, wi-fi, etc.) con un "sistema Python" (es: beagle bone,
-    macchina Linux, etc.);
-2.  l'hardware è connesso ad un Arduino (o simile) che poi comunica con
-    il sistema Python;
-3.  il programma Pyton gira nativamente su un sistema in grado di
-    controllare l'hardware, ad esempio un ESP8266 Huzzah.
-
-Prerequisiti
-============
-
-Installazione di `Python` e della libreria `pygame`. Con `Debian` e
-simili `sudo apt-get install python-pygame`, con altri sistemi buon
-divertimento.
-
-Estrazione del codice
-=====================
-
-Il originale codice del progetto era contenuto tutto in un file
-`parking-simulation.org` da venivano vengono generati, via *tangling*
-molti altri file, tra cui i sorgenti Python. Per fare questa
-estrazione serve `Emacs` e la relativa libreria `org-mode` (che adesso
-fa comunque parte di una installazione standard di `Emacs`). Questa è
-ovviamente una dipendenza un po' forte ed avere un unico file
-"sorgente" non facilita la condivisione.  Per questo il progetto in
-questa versione "condivisa con gli studenti" è stato modificato nel
-senso che adesso il file org non è più utilizzato (almeno non per il
-*tangling*) e i file sorgente *Python* sono separati.
-
-Stato del codice
-================
-
-Questo progetto è evidentemente un *work in progress*.  Questa
-sezione, che dovrà essere aggiornata frequentemente, serve quindi per
-documentare quali parti sono funzionanti, cosa si può fare e
-come. Notare che il progetto include un *makefile* con alcuni *target*
-che servono proprio a lanciare i programmi principali.
+parcheggio, in particolare di una serie di luci che indicano il percorso
+per arrivare dall'entrata al posteggio più vicino all'uscita e viceversa.
 
 Simulazione
 -----------
@@ -63,15 +15,15 @@ con i seguenti tasti:
 1.  `q` termina l'esecuzione del programma,
 2.  `s` aggiunge un sensore (posto per parcheggiare),
 3.  `c` aggiunge una macchina,
-4.  `p` parcheggia una macchina in un posto a caso (libero),
-5.  `u` "sparcheggia" una macchina a caso (parcheggiata),
+4.  `p` parcheggia una macchina in un posto a caso (libero) seguendo le indicazioni delle luci che si sono accese, una volta parcheggiata l'auto si crea un percorso per i pedoni che arriva all'uscita,
+5.  `u` "sparcheggia" una macchina a caso (parcheggiata) seguendo le indicazioni delle luci che si sono accese,
 6.  `x` fa partire o arresta la modalità "automatica",
 7.  `b` salva lo stato del sistema (posizioni di sensori e macchine),
 8.  `r` ripristina lo stato dal file di cui sopra (`parking.state`).
 9.  `l` mostra delle informazioni sullo stato del sistema.
 
 Durante il funzionamento, il programma (se eseguito con l'opzione `-v`
-come da *makefile*) fa il *logging* di vari eventi. Si ottie
+come da *makefile*) fa il *logging* di vari eventi. Si ottiene
 
 ``` {.example}
 $ python parking_simulation.py -v
@@ -121,8 +73,9 @@ _ _ _ _ X
 X _ _ _ _
 ```
 
-1.  `socket_client_cli.py` è simile al precedente ma invece che andare
+2.  `socket_client_cli.py` è simile al precedente ma invece che andare
     in automatico, apre una CLI (*command line interface*) da cui si
     possono dare dei comandi, ossia inviare delle richieste. Al momento
     l'unica richiesta possibile è `state` che fornisce la stesso
     informazione di `socket_client`.
+
