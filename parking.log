@@ -1,0 +1,7 @@
+30-05 10:57:30 root         DEBUG    Adding car n. 0 at (500, 100)
+30-05 10:57:30 root         DEBUG    Adding car n. 1 at (500, 150)
+30-05 10:57:33 root         DEBUG    Adding sensor n. 0 at (100, 100)
+30-05 10:57:33 root         DEBUG    Adding sensor n. 1 at (100, 150)
+30-05 10:57:35 root         DEBUG    Car 0 is a new entry in sensor 0
+30-05 10:57:35 root         DEBUG    Car 0 arrived at sensor 0 at 2017/05/30 10:57:35
+30-05 10:57:50 root         DEBUG    Car 0 left sensor 0 at 2017/05/30 10:57:50
