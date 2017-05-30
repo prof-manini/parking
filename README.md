@@ -15,7 +15,7 @@ con i seguenti tasti:
 1.  `q` termina l'esecuzione del programma,
 2.  `s` aggiunge un sensore (posto per parcheggiare),
 3.  `c` aggiunge una macchina,
-4.  `p` parcheggia una macchina in un posto a caso (libero) seguendo le indicazioni delle luci che si sono accese,
+4.  `p` parcheggia una macchina in un posto a caso (libero) seguendo le indicazioni delle luci che si sono accese, una volta parcheggiata l'auto si crea un percorso per i pedoni che arriva all'uscita,
 5.  `u` "sparcheggia" una macchina a caso (parcheggiata) seguendo le indicazioni delle luci che si sono accese,
 6.  `x` fa partire o arresta la modalità "automatica",
 7.  `b` salva lo stato del sistema (posizioni di sensori e macchine),
