@@ -4,6 +4,7 @@ import os
 import argparse
 import settings as opt
 import logging
+from panel import PanelSocketServer
 
 info = logging.info
 debug = logging.debug
@@ -124,6 +125,10 @@ def main(args):
     GAME = g = game.Game()
 
     s = SocketServer(g)
+    p = PanelSocketServer(g)
+    pt = threading.Thread(target=p.run)
+    pt.daemon = True
+    pt.start()
     t = threading.Thread(target=s.run)
     t.daemon = True
     t.start()
