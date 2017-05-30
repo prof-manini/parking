@@ -1,5 +1,4 @@
 
-#
 import pygame
 import settings as opt
 
@@ -22,7 +21,9 @@ class CarSensor(pygame.sprite.Sprite):
         CarSensor.oid += 1
         self.world = world
         self.image = pygame.Surface((30, 30))
-        self.image.fill(opt.GREEN)
+        #self.image.fill(opt.GREEN)
+	self.image = pygame.image.load("./img/p.png")
+	self.image = pygame.transform.scale(self.image, (40, 40))
         self.image = self.image.convert()
         self.rect = self.image.get_rect()
         self.pos = Vector(pos)
@@ -101,16 +102,16 @@ class CarSensor(pygame.sprite.Sprite):
                     debug("Car %d arrived at sensor %d at %s",
                            c.oid, self.oid, opt.str_now())
 
-        if self.reserved:
-            self.image.fill(opt.GRAY)
+       # if self.reserved:
+            #self.image.fill(opt.GRAY)
         f = pygame.font.SysFont("Arial", 25)
-        t = f.render(str(self.oid), 0, opt.WHITE)
-        pygame.Surface.blit(self.image, t, (10,0))
+        #t = f.render(str(self.oid), 0, opt.WHITE)
+        #pygame.Surface.blit(self.image, t, (10,0))
 
 #
     def activate(self, value):
         self._active = value
-        self.image.fill(self.active and opt.RED or opt.GREEN)
+        #self.image.fill(self.active and opt.RED or opt.GREEN)
 
     def __getstate__(self):
         return {"pos": self.pos}

@@ -1,6 +1,7 @@
 
 import pygame
 import settings as opt
+import random
 
 import logging
 info = logging.info
@@ -22,7 +23,11 @@ class Car(pygame.sprite.Sprite):
         Car.oid += 1
         self.world = world
         self.image = pygame.Surface((30, 30))
-        self.image.fill(opt.YELLOW)
+        #self.image.fill(opt.YELLOW)
+	nRandom = random.randint(0,3)
+	self.images = ["./img/cars/macchinaRossa.png", "./img/cars/macchinaRossa2.png", "./img/cars/police.png", "./img/cars/gialla.png"]
+	self.image = pygame.image.load(self.images[nRandom])
+	self.image = pygame.transform.scale(self.image, (50, 30))
         self.image = self.image.convert()
         self.rect = self.image.get_rect()
         self.pos = Vector(pos)
@@ -48,6 +53,7 @@ class Car(pygame.sprite.Sprite):
 
     def __cmp__(self, other):
         return cmp(self.oid, other.oid)
+
 
 #
     def update(self):
@@ -91,8 +97,9 @@ class Car(pygame.sprite.Sprite):
         # update
         self.rect.center = self.pos
         f = pygame.font.SysFont("Arial", 25)
-        t = f.render(str(self.oid), 0, opt.BLACK)
-        pygame.Surface.blit(self.image, t, (10,0))
+        #t = f.render(str(self.oid), 0, opt.BLACK)
+        #pygame.Surface.blit(self.image, t, (10,0))
+
 
 #
     def park_at_sensor(self, sensor):
@@ -114,3 +121,5 @@ class Car(pygame.sprite.Sprite):
 
     def __setstate__(self, state):
         self.pos = state["pos"]
+
+	
