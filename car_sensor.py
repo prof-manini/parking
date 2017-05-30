@@ -96,8 +96,8 @@ class CarSensor(pygame.sprite.Sprite):
                 self.store_car_access(self.car, entering=False)
                 debug("Car %d left sensor %d at %s",
                       self.car.oid, self.oid, opt.str_now())
-                to_file("Car %d left sensor %d at %s"
-                        % (self.car.oid, self.oid, opt.str_now()))
+                to_file("%d %d %d %s"
+                        % (self.car.oid, self.oid, 0, opt.str_now()))
                 self.car = None
         else:
             if cc:
@@ -108,8 +108,8 @@ class CarSensor(pygame.sprite.Sprite):
                     self.store_car_access(self.car, entering=True)
                     debug("Car %d arrived at sensor %d at %s",
                            c.oid, self.oid, opt.str_now())
-                    to_file("Car %d arrived at sensor %d at %s"
-                          % (self.car.oid, self.oid, opt.str_now()))
+                    to_file("%d %d %d %s"
+                          % (self.car.oid, self.oid, 1, opt.str_now()))
         if self.reserved:
             self.image.fill(opt.GRAY)
         f = pygame.font.SysFont("Arial", 25)
