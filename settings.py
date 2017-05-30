@@ -1,4 +1,3 @@
-
 #
 # basic defs
 WIDTH = 1200
@@ -13,7 +12,10 @@ GRAY = (128,128,128)
 BLACK = (0,0,0)
 RED = (255,0,0)
 GREEN = (0,255,0)
+LIGHT_GREEN = (0,100,0)
+DARK_GREEN = (0,200,0)
 BLUE = (0,0,255)
+LIGHTBLUE = (0,100,250)
 YELLOW = (255,255,0)
 
 # layers
