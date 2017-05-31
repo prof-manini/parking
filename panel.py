@@ -11,6 +11,8 @@ import logging
 import sys
 import time
 
+info = logging.info
+
 # eventuali globali
 WIDTH = 600
 HEIGHT = 400
@@ -42,7 +44,7 @@ class PanelSocketServer():
     def run(self):
         while 1:
             channel, client = self.sock.accept()
-            info("server got connection from %s", str(client))
+            # info("server got connection from %s", str(client))
             ss = [v and "X" or "_"
                   for _,v in self._get_sensors_state()]
             o = " ".join(ss)
