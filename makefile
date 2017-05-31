@@ -24,6 +24,7 @@ cleaner: clean
 	rm -rf _minted*
 	rm -f
 	rm -f TAGS
+	rm -f *.txt
 
 TAGS: $(CODE)
 	etags --regex=/[A-Z_]+/ $(CODE)
