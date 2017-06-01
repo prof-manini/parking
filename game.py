@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+
 import time
 import random
 import pickle
@@ -33,9 +34,10 @@ class Game:
         self.backup_file = "parking.state"
         self.random_mode = False
 
-        self.original_background = pygame.image.load("img/parking-background-0.jpg")
-        self.current_background = pygame.transform.scale(self.original_background, (opt.WIDTH,                                                           opt.HEIGHT))
-
+        path = "./img/parking-background-0.jpg"
+        self.original_background = pygame.image.load(path)
+        self.current_background = pygame.transform.scale(
+            self.original_background, (opt.WIDTH, opt.HEIGHT))
 
 #
     def _do_help(self):
@@ -47,8 +49,8 @@ class Game:
   l: give some log information (if run with -v option)
   b: save state to file
   r: restore state from file
-  p: park one car (choosen at random) following the lights directions that was switch on, when the car is parking make
-  u: make a car leave (choosen at random) following the lights directions that was switch on
+  p: park one car (choosen at random)
+  u: make a car leave (choosen at random)
   x: toggle random parking and leaving of cars
   +/=: double random movement interval
   -/_: halve random movement interval
@@ -119,7 +121,7 @@ class Game:
                 event.key in [pygame.K_q, pygame.K_ESCAPE]):
                 self.running = False
                 break
-            # RESIZE							########################
+            # RESIZE
             if event.type == pygame.VIDEORESIZE :
                 width, height = event.size
                 if (width < opt.WIDTH  or
@@ -129,11 +131,11 @@ class Game:
                 self.screen = pygame.display.set_mode((width,height),
                 pygame.RESIZABLE | pygame.HWSURFACE | pygame.DOUBLEBUF)
 
-                self.current_background = pygame.transform.scale(self.original_background,                                                                       (width,height))
+                self.current_background = pygame.transform.scale(
+                    self.original_background,
+                    (width,height))
 
-
-
-            #left mouse click on object (start dragging it)?
+            # left mouse click on object (start dragging it)?
             if (event.type == pygame.MOUSEBUTTONDOWN):
                 self.last_mouse_pos = pygame.mouse.get_pos()
                 left, _, _ = pygame.mouse.get_pressed()
