@@ -111,10 +111,9 @@ class Panel:
        self.zone3[0] = 0
        self.zone3[1] = opt.RED
 
-
+       print(data)
        # working with data
        for d in data.split(' '):
-           print(d)
            if '0' in d[0]:
                if d[1] == '_':self.zone1[0] += 1
            elif '1' in d[0]:
