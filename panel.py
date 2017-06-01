@@ -14,11 +14,16 @@ import time
 info = logging.info
 
 # eventuali globali
-WIDTH = 600
-HEIGHT = 400
+WIDTH = 350
+HEIGHT = 250
 WINDOW_TITLE = "Pannello posti liberi"
 THICKNESS = 2
-
+ZONEX = WIDTH - 300
+ZONE1Y = 60
+ZONE2Y = 115
+ZONE3Y = 170
+FMTX = 120
+CIRCLEX = 260
 # ******************************************************
 
 import socket
@@ -38,15 +43,14 @@ class PanelSocketServer():
             raise Exception("PanelSocketServer: error creating socket")
 
     def _get_sensors_state(self):
-        d = {s.zone:s.active for s in self.game.sensors}
-        return [(k,v) for k,v in sorted(d.items())]
+        return [(s.zone,s.active) for s in self.game.sensors]
 
     def run(self):
         while 1:
             channel, client = self.sock.accept()
             info("server got connection from %s", str(client))
-            ss = [v and "X" or "_"
-                  for _,v in self._get_sensors_state()]
+            ss = [str(str(k) + (v and 'x' or '_'))
+                  for k,v in self._get_sensors_state()]
             o = " ".join(ss)
             channel.send(o)
             channel.close()
@@ -78,15 +82,14 @@ class Panel:
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption(WINDOW_TITLE)
         self.running = True
-        self.header = "PARCHEGGIO ISTITUTO DI ISTRUZIONE LA ROSA BIANCA"
+        self.header = "ISTITUTO DI ISTRUZIONE LA ROSA BIANCA"
         self.footer = "CAVALESE - "
         self.time = time.strftime("%H:%M")
 
-        # coppie (numero di posti liberi, stringa colore)
-
-        self.zone1 = list((10, "WHITE"))
-        self.zone2 = list((20, "RED"))
-        self.zone3 = list(( 5, "GREEN"))
+        # coppie (numero di posti liberi, colore)
+        self.zone1 = list((0,opt.RED))
+        self.zone2 = list((0,opt.RED))
+        self.zone3 = list((0,opt.RED))
 
         with open("port_panel.txt") as file:
             self.port = int(file.read())
@@ -104,46 +107,64 @@ class Panel:
     def update(self):
        self.time = time.strftime("%H:%M")
        data = self.client.get_data()
-       print(data)
-       #work with information
+       # reset list
+       self.zone1[0] = 0
+       self.zone1[1] = opt.RED
+       self.zone2[0] = 0
+       self.zone2[1] = opt.RED
+       self.zone3[0] = 0
+       self.zone3[1] = opt.RED
+
+       # working with data
+       for d in data.split(' '):
+           if '0' in d[0]:
+               if d[1] == '_':self.zone1[0] += 1
+           elif '1' in d[0]:
+               if d[1] == '_':self.zone2[0] += 1
+           elif '2' in d[0]:
+               if d[1] == '_':self.zone3[0] += 1
+
+       if self.zone1[0] > 0:
+           self.zone1[1] = opt.GREEN
+       if self.zone2[0] > 0:
+           self.zone2[1] = opt.GREEN
+       if self.zone3[0] > 0:
+           self.zone3[1] = opt.GREEN
+
 
     def draw(self):
 
         pygame.font.init()
-        self.headerFont = pygame.font.SysFont('Times New Roman', 20)
-        self.zoneFont = pygame.font.SysFont('Comics Sans', 32)
+        self.headerFont = pygame.font.SysFont('Times New Roman', 15)
+        self.zoneFont = pygame.font.SysFont('Comics Sans', 25)
 
         blit = self.screen.blit
         lines = pygame.draw.lines
 
         self.screen.fill(opt.LIGHTBLUE)
         self.headerSurface = self.headerFont.render(self.header, False, opt.WHITE)
-        blit(self.headerSurface,(35,25))
-        lines(self.screen, opt.WHITE, False, [(0,70),(WIDTH,70)], THICKNESS)
-        lines(self.screen, opt.WHITE, False, [(0,HEIGHT - 70),(WIDTH,HEIGHT -70)], THICKNESS)
+        blit(self.headerSurface,(25,10))
+        lines(self.screen, opt.WHITE, False, [(0,35),(WIDTH,35)], THICKNESS)
+        lines(self.screen, opt.WHITE, False, [(0,HEIGHT - 35),(WIDTH,HEIGHT - 35)], THICKNESS)
         render = self.zoneFont.render
-        blit(render("ZONA 1", False, opt.WHITE), (110, 135))
-        blit(render("ZONA 2", False, opt.WHITE), (110, 190))
-        blit(render("ZONA 3", False, opt.WHITE), (110, 245))
+        blit(render("ZONA 1", False, opt.WHITE), (ZONEX, ZONE1Y))
+        blit(render("ZONA 2", False, opt.WHITE), (ZONEX, ZONE2Y))
+        blit(render("ZONA 3", False, opt.WHITE), (ZONEX, ZONE3Y))
 
-        self.freePlaces = pygame.font.SysFont('Comics Sans', 32)
+        self.freePlaces = pygame.font.SysFont('Comics Sans', 25)
 
         fmt = "         %s         "
         render = self.freePlaces.render
-        blit(render(fmt % (self.zone1[0]), False, (255,128,0), opt.BLACK), (230,135))
-        blit(render(fmt % (self.zone2[0]), False, (255,128,0), opt.BLACK), (230,190))
-        blit(render(fmt % (self.zone3[0]), False, (255,128,0), opt.BLACK), (230,245))
+        blit(render(fmt % (self.zone1[0]), False, (255,128,0), opt.BLACK), (FMTX,ZONE1Y))
+        blit(render(fmt % (self.zone2[0]), False, (255,128,0), opt.BLACK), (FMTX,ZONE2Y))
+        blit(render(fmt % (self.zone3[0]), False, (255,128,0), opt.BLACK), (FMTX,ZONE3Y))
 
-        # Anche qui i colori sono stati inseriti per provare il
-        # codice.  Nel programma vero dovranno cambiare in base al
-        # numero di posti liberi.
-
-        pygame.draw.circle(self.screen, opt.GREEN, (450,145), 12, 0)
-        pygame.draw.circle(self.screen, opt.GREEN, (450,200), 12, 0)
-        pygame.draw.circle(self.screen, opt.RED, (450,255), 12, 0)
-        self.footerFont = pygame.font.SysFont('Comics Sans', 32)
+        pygame.draw.circle(self.screen, self.zone1[1], (CIRCLEX,ZONE1Y + 10), 12, 0)
+        pygame.draw.circle(self.screen, self.zone2[1], (CIRCLEX,ZONE2Y + 10), 12, 0)
+        pygame.draw.circle(self.screen, self.zone3[1], (CIRCLEX,ZONE3Y + 10), 12, 0)
+        self.footerFont = pygame.font.SysFont('Comics Sans', 22)
         self.footerSurface = self.footerFont.render(self.footer+self.time, False, opt.WHITE)
-        self.screen.blit(self.footerSurface,(170,355))
+        self.screen.blit(self.footerSurface,(105,HEIGHT - 25))
         # aggiorno il display
         pygame.display.flip()
 
