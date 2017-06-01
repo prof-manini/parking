@@ -128,6 +128,7 @@ def main(args):
     p = PanelSocketServer(g)
     pt = threading.Thread(target=p.run)
     pt.daemon = True
+
     pt.start()
     t = threading.Thread(target=s.run)
     t.daemon = True
@@ -136,11 +137,17 @@ def main(args):
     while g.running:
         g.start_new()
         g.run()
+    debug("Leaving main's while!")
+    debug("Quitting pygame...")
     pygame.quit()
+    debug("Quitting pygame done!")
     return 0
 
 if __name__ == "__main__":
 
     import sys
     args = sys.argv[1:]
-    sys.exit(main(args))
+    try:
+        sys.exit(main(args))
+    finally:
+        pygame.quit()

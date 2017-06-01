@@ -47,7 +47,7 @@ class Game:
   l: give some log information (if run with -v option)
   b: save state to file
   r: restore state from file
-  p: park one car (choosen at random) following the lights directions that was switch on, when the car is parking make 
+  p: park one car (choosen at random) following the lights directions that was switch on, when the car is parking make
   u: make a car leave (choosen at random) following the lights directions that was switch on
   x: toggle random parking and leaving of cars
   +/=: double random movement interval
@@ -118,6 +118,7 @@ class Game:
                 event.type == pygame.KEYDOWN and
                 event.key in [pygame.K_q, pygame.K_ESCAPE]):
                 self.running = False
+                debug("QUITTING....")
                 break
             # RESIZE							########################
             if event.type == pygame.VIDEORESIZE :
@@ -312,7 +313,7 @@ class Game:
             self.events()
             self.update()
             self.draw()
-
+        debug("Leaving game.run")
 #
     def update(self):
         self.all_sprites.update()

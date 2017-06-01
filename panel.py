@@ -154,8 +154,11 @@ class Panel:
             self.draw()
 
 def main():
-    p = Panel()
-    p.run()
+    try:
+        p = Panel()
+        p.run()
+    finally:
+        pygame.quit()
 
 if __name__ == "__main__":
     sys.exit(main())
