@@ -20,7 +20,6 @@ warning = logging.warning
 class Game:
 
     def __init__(self):
-        pygame.init()
         window_size = [opt.WIDTH,opt.HEIGHT]
         self.screen = pygame.display.set_mode(window_size, pygame.RESIZABLE)
         pygame.display.set_caption(opt.TITLE)
@@ -118,7 +117,6 @@ class Game:
                 event.type == pygame.KEYDOWN and
                 event.key in [pygame.K_q, pygame.K_ESCAPE]):
                 self.running = False
-                debug("QUITTING....")
                 break
             # RESIZE							########################
             if event.type == pygame.VIDEORESIZE :
@@ -313,7 +311,7 @@ class Game:
             self.events()
             self.update()
             self.draw()
-        debug("Leaving game.run")
+
 #
     def update(self):
         self.all_sprites.update()

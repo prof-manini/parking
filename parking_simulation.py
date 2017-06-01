@@ -122,32 +122,31 @@ def main(args):
     setup_logging(args)        # config logging
     do_options(args)
 
-    GAME = g = game.Game()
+    try:
+        pygame.init()
+        GAME = g = game.Game()
 
-    s = SocketServer(g)
-    p = PanelSocketServer(g)
-    pt = threading.Thread(target=p.run)
-    pt.daemon = True
+        s = SocketServer(g)
+        p = PanelSocketServer(g)
+        pt = threading.Thread(target=p.run)
+        pt.daemon = True
 
-    pt.start()
-    t = threading.Thread(target=s.run)
-    t.daemon = True
-    t.start()
+        pt.start()
+        t = threading.Thread(target=s.run)
+        t.daemon = True
+        t.start()
 
-    while g.running:
-        g.start_new()
-        g.run()
-    debug("Leaving main's while!")
-    debug("Quitting pygame...")
-    pygame.quit()
-    debug("Quitting pygame done!")
+        while g.running:
+            g.start_new()
+            g.run()
+        debug("Quitting pygame...")
+
+    finally:
+        pygame.quit()
     return 0
 
 if __name__ == "__main__":
 
     import sys
     args = sys.argv[1:]
-    try:
-        sys.exit(main(args))
-    finally:
-        pygame.quit()
+    sys.exit(main(args))
