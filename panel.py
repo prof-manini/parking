@@ -14,11 +14,16 @@ import time
 info = logging.info
 
 # eventuali globali
-WIDTH = 600
-HEIGHT = 400
+WIDTH = 350
+HEIGHT = 250
 WINDOW_TITLE = "Pannello posti liberi"
 THICKNESS = 2
-
+ZONEX = WIDTH - 300
+ZONE1Y = 60
+ZONE2Y = 115
+ZONE3Y = 170
+FMTX = 120
+CIRCLEX = 260
 # ******************************************************
 
 import socket
@@ -77,7 +82,7 @@ class Panel:
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption(WINDOW_TITLE)
         self.running = True
-        self.header = "PARCHEGGIO ISTITUTO DI ISTRUZIONE LA ROSA BIANCA"
+        self.header = "ISTITUTO DI ISTRUZIONE LA ROSA BIANCA"
         self.footer = "CAVALESE - "
         self.time = time.strftime("%H:%M")
 
@@ -130,36 +135,36 @@ class Panel:
     def draw(self):
 
         pygame.font.init()
-        self.headerFont = pygame.font.SysFont('Times New Roman', 20)
-        self.zoneFont = pygame.font.SysFont('Comics Sans', 32)
+        self.headerFont = pygame.font.SysFont('Times New Roman', 15)
+        self.zoneFont = pygame.font.SysFont('Comics Sans', 25)
 
         blit = self.screen.blit
         lines = pygame.draw.lines
 
         self.screen.fill(opt.LIGHTBLUE)
         self.headerSurface = self.headerFont.render(self.header, False, opt.WHITE)
-        blit(self.headerSurface,(35,25))
-        lines(self.screen, opt.WHITE, False, [(0,70),(WIDTH,70)], THICKNESS)
-        lines(self.screen, opt.WHITE, False, [(0,HEIGHT - 70),(WIDTH,HEIGHT -70)], THICKNESS)
+        blit(self.headerSurface,(25,10))
+        lines(self.screen, opt.WHITE, False, [(0,35),(WIDTH,35)], THICKNESS)
+        lines(self.screen, opt.WHITE, False, [(0,HEIGHT - 35),(WIDTH,HEIGHT - 35)], THICKNESS)
         render = self.zoneFont.render
-        blit(render("ZONA 1", False, opt.WHITE), (110, 135))
-        blit(render("ZONA 2", False, opt.WHITE), (110, 190))
-        blit(render("ZONA 3", False, opt.WHITE), (110, 245))
+        blit(render("ZONA 1", False, opt.WHITE), (ZONEX, ZONE1Y))
+        blit(render("ZONA 2", False, opt.WHITE), (ZONEX, ZONE2Y))
+        blit(render("ZONA 3", False, opt.WHITE), (ZONEX, ZONE3Y))
 
-        self.freePlaces = pygame.font.SysFont('Comics Sans', 32)
+        self.freePlaces = pygame.font.SysFont('Comics Sans', 25)
 
         fmt = "         %s         "
         render = self.freePlaces.render
-        blit(render(fmt % (self.zone1[0]), False, (255,128,0), opt.BLACK), (230,135))
-        blit(render(fmt % (self.zone2[0]), False, (255,128,0), opt.BLACK), (230,190))
-        blit(render(fmt % (self.zone3[0]), False, (255,128,0), opt.BLACK), (230,245))
+        blit(render(fmt % (self.zone1[0]), False, (255,128,0), opt.BLACK), (FMTX,ZONE1Y))
+        blit(render(fmt % (self.zone2[0]), False, (255,128,0), opt.BLACK), (FMTX,ZONE2Y))
+        blit(render(fmt % (self.zone3[0]), False, (255,128,0), opt.BLACK), (FMTX,ZONE3Y))
 
-        pygame.draw.circle(self.screen, self.zone1[1], (450,145), 12, 0)
-        pygame.draw.circle(self.screen, self.zone2[1], (450,200), 12, 0)
-        pygame.draw.circle(self.screen, self.zone3[1], (450,255), 12, 0)
-        self.footerFont = pygame.font.SysFont('Comics Sans', 32)
+        pygame.draw.circle(self.screen, self.zone1[1], (CIRCLEX,ZONE1Y + 10), 12, 0)
+        pygame.draw.circle(self.screen, self.zone2[1], (CIRCLEX,ZONE2Y + 10), 12, 0)
+        pygame.draw.circle(self.screen, self.zone3[1], (CIRCLEX,ZONE3Y + 10), 12, 0)
+        self.footerFont = pygame.font.SysFont('Comics Sans', 22)
         self.footerSurface = self.footerFont.render(self.footer+self.time, False, opt.WHITE)
-        self.screen.blit(self.footerSurface,(170,355))
+        self.screen.blit(self.footerSurface,(105,HEIGHT - 25))
         # aggiorno il display
         pygame.display.flip()
 
