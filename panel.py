@@ -38,8 +38,7 @@ class PanelSocketServer():
             raise Exception("PanelSocketServer: error creating socket")
 
     def _get_sensors_state(self):
-        d = {s.zone:s.active for s in self.game.sensors}
-        return [(k,v) for k,v in sorted(d.items())]
+        return [(s.zone,s.active) for s in self.game.sensors]
 
     def run(self):
         while 1:
@@ -111,7 +110,6 @@ class Panel:
        self.zone3[0] = 0
        self.zone3[1] = opt.RED
 
-       print(data)
        # working with data
        for d in data.split(' '):
            if '0' in d[0]:
