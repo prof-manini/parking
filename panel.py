@@ -45,8 +45,8 @@ class PanelSocketServer():
         while 1:
             channel, client = self.sock.accept()
             info("server got connection from %s", str(client))
-            ss = [v and "X" or "_"
-                  for _,v in self._get_sensors_state()]
+            ss = [str(str(k) + (v and 'x' or '_'))
+                  for k,v in self._get_sensors_state()]
             o = " ".join(ss)
             channel.send(o)
             channel.close()
@@ -82,11 +82,10 @@ class Panel:
         self.footer = "CAVALESE - "
         self.time = time.strftime("%H:%M")
 
-        # coppie (numero di posti liberi, stringa colore)
-
-        self.zone1 = list((10, "WHITE"))
-        self.zone2 = list((20, "RED"))
-        self.zone3 = list(( 5, "GREEN"))
+        # coppie (numero di posti liberi, colore)
+        self.zone1 = list((0,opt.RED))
+        self.zone2 = list((0,opt.RED))
+        self.zone3 = list((0,opt.RED))
 
         with open("port_panel.txt") as file:
             self.port = int(file.read())
@@ -104,8 +103,32 @@ class Panel:
     def update(self):
        self.time = time.strftime("%H:%M")
        data = self.client.get_data()
-       print(data)
-       #work with information
+       # reset list
+       self.zone1[0] = 0
+       self.zone1[1] = opt.RED
+       self.zone2[0] = 0
+       self.zone2[1] = opt.RED
+       self.zone3[0] = 0
+       self.zone3[1] = opt.RED
+
+
+       # working with data
+       for d in data.split(' '):
+           print(d)
+           if '0' in d[0]:
+               if d[1] == '_':self.zone1[0] += 1
+           elif '1' in d[0]:
+               if d[1] == '_':self.zone2[0] += 1
+           elif '2' in d[0]:
+               if d[1] == '_':self.zone3[0] += 1
+
+       if self.zone1[0] > 0:
+           self.zone1[1] = opt.GREEN
+       if self.zone2[0] > 0:
+           self.zone2[1] = opt.GREEN
+       if self.zone3[0] > 0:
+           self.zone3[1] = opt.GREEN
+
 
     def draw(self):
 
@@ -134,13 +157,9 @@ class Panel:
         blit(render(fmt % (self.zone2[0]), False, (255,128,0), opt.BLACK), (230,190))
         blit(render(fmt % (self.zone3[0]), False, (255,128,0), opt.BLACK), (230,245))
 
-        # Anche qui i colori sono stati inseriti per provare il
-        # codice.  Nel programma vero dovranno cambiare in base al
-        # numero di posti liberi.
-
-        pygame.draw.circle(self.screen, opt.GREEN, (450,145), 12, 0)
-        pygame.draw.circle(self.screen, opt.GREEN, (450,200), 12, 0)
-        pygame.draw.circle(self.screen, opt.RED, (450,255), 12, 0)
+        pygame.draw.circle(self.screen, self.zone1[1], (450,145), 12, 0)
+        pygame.draw.circle(self.screen, self.zone2[1], (450,200), 12, 0)
+        pygame.draw.circle(self.screen, self.zone3[1], (450,255), 12, 0)
         self.footerFont = pygame.font.SysFont('Comics Sans', 32)
         self.footerSurface = self.footerFont.render(self.footer+self.time, False, opt.WHITE)
         self.screen.blit(self.footerSurface,(170,355))
