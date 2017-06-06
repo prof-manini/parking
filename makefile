@@ -17,13 +17,14 @@ repl_client: socket_client_cli.py
 
 clean:
 	rm -f *~ *.pyc
-	rm -f port.txt
+	rm -f port.txt parking.log
 
 cleaner: clean
 	rm -f *.pdf *.state
 	rm -rf _minted*
-	rm -f parking.log
+	rm -f
 	rm -f TAGS
+	rm -f *.txt
 
 TAGS: $(CODE)
 	etags --regex=/[A-Z_]+/ $(CODE)

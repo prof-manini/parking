@@ -1,9 +1,12 @@
+# -*- coding:utf-8 -*-
+
 import pygame
 import random
 import os
 import argparse
 import settings as opt
 import logging
+from panel import PanelSocketServer
 
 info = logging.info
 debug = logging.debug
@@ -121,17 +124,27 @@ def main(args):
     setup_logging(args)        # config logging
     do_options(args)
 
-    GAME = g = game.Game()
+    try:
+        pygame.init()
+        GAME = g = game.Game()
 
-    s = SocketServer(g)
-    t = threading.Thread(target=s.run)
-    t.daemon = True
-    t.start()
+        s = SocketServer(g)
+        p = PanelSocketServer(g)
+        pt = threading.Thread(target=p.run)
+        pt.daemon = True
 
-    while g.running:
-        g.start_new()
-        g.run()
-    pygame.quit()
+        pt.start()
+        t = threading.Thread(target=s.run)
+        t.daemon = True
+        t.start()
+
+        while g.running:
+            g.start_new()
+            g.run()
+        debug("Quitting pygame...")
+
+    finally:
+        pygame.quit()
     return 0
 
 if __name__ == "__main__":
