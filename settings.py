@@ -2,7 +2,7 @@
 # basic defs
 WIDTH = 600
 HEIGHT = 400
-FPS = 60
+FPS = 120
 TITLE = "Parking"
 FONT_NAME = "arial"
 

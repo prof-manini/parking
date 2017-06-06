@@ -20,7 +20,8 @@ warning = logging.warning
 class Game:
 
     def __init__(self):
-        window_size = [opt.WIDTH,opt.HEIGHT]
+
+        window_size = [self.original_background_width,self.original_background_height]
         self.screen = pygame.display.set_mode(window_size, pygame.RESIZABLE)
         pygame.display.set_caption(opt.TITLE)
         self.clock = pygame.time.Clock()
@@ -31,10 +32,9 @@ class Game:
         self.moving_object = None
         self.backup_file = "parking.state"
         self.random_mode = False
-
-        self.original_background = pygame.image.load("img/parking-background-0.jpg")
-        self.current_background = pygame.transform.scale(self.original_background, (opt.WIDTH,                                                           opt.HEIGHT))
-
+        self.current_background = pygame.transform.scale(
+            self.original_background,
+            (self.original_background_width, self.original_background_height))
 
 #
     def _do_help(self):
@@ -109,6 +109,22 @@ class Game:
         pass
 
 #
+    def get_window_size(self):
+        return self.current_background.get_rect().width, self.current_background.get_rect().height
+
+#
+    def get_ratio(self, width, height):
+
+
+        maxWidth =  16
+        maxHeight = 9
+
+        ratioX = (maxHeight / maxWidth) * width
+        ratioY = (maxHeight / maxWidth) * height
+
+        return int(ratioX), int(ratioY)
+
+#
     def events(self):
         for event in pygame.event.get():
 
@@ -118,7 +134,7 @@ class Game:
                 event.key in [pygame.K_q, pygame.K_ESCAPE]):
                 self.running = False
                 break
-            # RESIZE							########################
+            # RESIZE
             if event.type == pygame.VIDEORESIZE :
                 width, height = event.size
                 if (width < opt.WIDTH  or
@@ -128,9 +144,8 @@ class Game:
                 self.screen = pygame.display.set_mode((width,height),
                 pygame.RESIZABLE | pygame.HWSURFACE | pygame.DOUBLEBUF)
 
-                self.current_background = pygame.transform.scale(self.original_background,                                                                       (width,height))
-
-
+                self.current_background = pygame.transform.scale(
+                    self.original_background, (width,height))
 
             #left mouse click on object (start dragging it)?
             if (event.type == pygame.MOUSEBUTTONDOWN):
