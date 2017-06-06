@@ -116,13 +116,14 @@ class Panel:
        self.zone3[1] = opt.RED
 
        # working with data
-       for d in data.split(' '):
-           if '0' in d[0]:
-               if d[1] == '_':self.zone1[0] += 1
-           elif '1' in d[0]:
-               if d[1] == '_':self.zone2[0] += 1
-           elif '2' in d[0]:
-               if d[1] == '_':self.zone3[0] += 1
+       if data != "":
+           for d in data.split(' '):
+               if '0' in d[0]:
+                   if d[1] == '_':self.zone1[0] += 1
+               elif '1' in d[0]:
+                   if d[1] == '_':self.zone2[0] += 1
+               elif '2' in d[0]:
+                   if d[1] == '_':self.zone3[0] += 1
 
        if self.zone1[0] > 0:
            self.zone1[1] = opt.GREEN
