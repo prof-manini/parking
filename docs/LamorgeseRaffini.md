@@ -3,24 +3,27 @@ https://github.com/Lamorgese-Raffini/parking
 PARKING-SIMULATION - PANNELLO ALL'INGRESSO POSTI LIBERI
 =======================================================
 
+Files
+=====
+    - creato il file panel.py, contenente la classe Panel per la gestione del
+      pannello, la classe PanelSocketServer e la classe PanelSocketClient per la
+      gestione della comunicazione via socket.
+    - modificato il file car_sensor.py, è stato aggiunto l'attributo zone (un
+      numero compreso tra 0 e 2) per differenziare le aree del parhceggio
+
 Descrizione
 ===========
 
-    L'obiettivo finale è realizzare un pannello (posto in una finestra pygame
-    indipendente) visualizzante il numero di posti liberi per ogni zona del
-    parcheggio, rispettivamente zona 1, 2 e 3.
-    A lato di tale numero sarà presente un indicatore luminoso, di colore verde,
-    giallo o rosso.
-    l'indicatore risulterà di colore verde quando i posti liberi saranno
-    superiori al 15% del totale, giallo se inferiore e rosso a 0.
-    Nel lato inferiore del pannello sarà presente una sezione riservata alla
-    comunicazione di messaggi speciali. Il messaggio di default sarà una stringa
-    contenente la località e l'ora attuale, per esempio: "CAVALESE - 08:58".
-
-Indicazioni per la realizzazione
-================================
-
-    Per raggiungere tale obiettivo verrà creato un file "panel.py" contenente la
-    classe Panel, che gestisce il pannello. Verrà aggiunto un attributo alla
-    classe Car-sensor per indicare la zona di appartenenza del parcheggio ed
-    infine verrà predisposto un comando "i" per l'interazione con il pannello.
+    Il pannello è suddiviso in tre sezioni, la prima (header) contiene il nome
+    dell'istituto "La Rosa Bianca" di Cavalese; la seconda contiene tutte le
+    informazioni per ogni zona: numero di posti liberi ed indicatore luminoso,
+    rosso o verde; la terza ed ultima sezione (footer) contiene il luogo e l'ora
+    corrente presa dal'ora di sistema.
+    L'indicatore luminoso risulta verde se il numero di posti liberi è maggiore
+    di zero, risulta invece rosso in caso contrario.
+    Il pannello funziona tramite apposito processo, il quale comunica con il
+    processo della simulazione del parcheggio ottenendo da questo una stringa
+    contenete per ogni sensore la zona di appartenenza e "x" se il sensore è
+    occupato.
+    L'unica interazione con l'utente è tramite il pulsante "Q" che chiude la
+    finestra pygame.
