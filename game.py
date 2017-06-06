@@ -1,3 +1,5 @@
+# -*- coding:utf-8 -*-
+
 import time
 import random
 import pickle
@@ -43,7 +45,6 @@ class Game:
         self.current_background = pygame.transform.scale(
             self.original_background,
             (self.original_background_width, self.original_background_height))
-
 #
     def _do_help(self):
         print("""
@@ -54,8 +55,8 @@ class Game:
   l: give some log information (if run with -v option)
   b: save state to file
   r: restore state from file
-  p: park one car (choosen at random) following the lights directions that was switch on, when the car is parking make
-  u: make a car leave (choosen at random) following the lights directions that was switch on
+  p: park one car (choosen at random)
+  u: make a car leave (choosen at random)
   x: toggle random parking and leaving of cars
   +/=: double random movement interval
   -/_: halve random movement interval
@@ -155,7 +156,7 @@ class Game:
                 self.current_background = pygame.transform.scale(
                     self.original_background, (width,height))
 
-            #left mouse click on object (start dragging it)?
+            # left mouse click on object (start dragging it)?
             if (event.type == pygame.MOUSEBUTTONDOWN):
                 self.last_mouse_pos = pygame.mouse.get_pos()
                 left, _, _ = pygame.mouse.get_pressed()

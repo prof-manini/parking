@@ -1,3 +1,5 @@
+# -*- coding:utf-8 -*-
+
 #
 # basic defs
 WIDTH = 600

@@ -1,3 +1,5 @@
+# -*- coding:utf-8 -*-
+
 ################## http://www.pygame.org/wiki/2DVectorClass ##################
 import operator
 import math
