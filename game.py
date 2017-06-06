@@ -21,7 +21,15 @@ class Game:
 
     def __init__(self):
 
-        window_size = [self.original_background_width,self.original_background_height]
+        self.original_background = pygame.image.load(
+            "img/parking-background-0.jpg")
+
+        (self.original_background_width,
+         self.original_background_height) = self.original_background.get_rect().size
+
+        window_size = [self.original_background_width,
+                       self.original_background_height]
+
         self.screen = pygame.display.set_mode(window_size, pygame.RESIZABLE)
         pygame.display.set_caption(opt.TITLE)
         self.clock = pygame.time.Clock()
